@@ -14,7 +14,7 @@ Se utilizan las siguientes librerias:
 <br>
 
 <div>
-  <img width="240"  height="500" alt="image" src="https://github.com/DavidAriias/instagram/assets/112224260/4be709c1-f618-4d17-bb34-8461095e75e9">
+  <img width="250"  height="500" alt="image" src="https://github.com/DavidAriias/instagram/assets/112224260/4be709c1-f618-4d17-bb34-8461095e75e9">
   <img width="250"  height="500" alt="image" src="https://github.com/DavidAriias/instagram/assets/112224260/b6aec5a1-548a-49de-8a17-f835d20115f3">
   <img width="250" height="500" alt="image" src="https://github.com/DavidAriias/instagram/assets/112224260/84301e43-682f-4b3b-81e7-2f3bb76f92e7">
   <img width="250" height="500" alt="image" src="https://github.com/DavidAriias/instagram/assets/112224260/3258260b-cdd4-46f0-a4de-35a518997e23">
