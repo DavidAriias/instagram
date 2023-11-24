@@ -42,3 +42,5 @@ export '../widgets/profile/pop_up_surface/edit_picture_profile_pop_up_surface.da
 export '../widgets/add/reordable_image_list.dart';
 export '../widgets/shared/media/image_counter.dart';
 export '../widgets/add/music_pop_up_surface.dart';
+export '../widgets/shared/buttons/custom_play_button.dart';
+export '../widgets/shared/media/custom_cache_image_network.dart';

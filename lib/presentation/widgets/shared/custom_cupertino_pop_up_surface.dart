@@ -21,7 +21,7 @@ class CustomCupertinoPopUpSurface extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
-      onVerticalDragDown: (_) => context.pop(),
+      onVerticalDragUpdate: (_) => context.pop(),
       child: CupertinoPopupSurface(
         child: Container(
             color: color,

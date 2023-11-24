@@ -24,6 +24,7 @@ dependencies:
   intl: ^0.18.1
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
+  just_audio: ^0.9.36
   marquee: ^2.2.3
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0
