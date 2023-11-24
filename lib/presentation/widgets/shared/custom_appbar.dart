@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget {
         padding: padding,
         child: leading,
       ),
-      leadingWidth: (leadingWidth == null) ? size.width / 3 : leadingWidth,
+      leadingWidth: (leadingWidth == null) ? size.width / 2 : leadingWidth,
       actions: actions,
       toolbarHeight: toolbarHeight ?? kToolbarHeight,
     );

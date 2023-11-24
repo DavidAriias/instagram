@@ -720,14 +720,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   normalize:
     dependency: transitive
     description:
@@ -848,14 +840,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.1"
   pub_semver:
     dependency: transitive
     description:
@@ -1021,14 +1005,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  story:
-    dependency: "direct main"
-    description:
-      name: story
-      sha256: "0cff3c02d5ad1d9c1cf79481b8fe4a4f2f859e56b351644e96b8b209e6a110a5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   stream_channel:
     dependency: transitive
     description:
