@@ -1,17 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:instagram/infraestructure/graphql_schemas/graphql_client.dart';
+import 'package:instagram/presentation/providers/music/music_provider.dart';
 import 'package:just_audio/just_audio.dart';
 
-class CustomPlayButton extends StatefulWidget {
+class CustomPlayButton extends ConsumerStatefulWidget {
   const CustomPlayButton({super.key, required this.audioUrl});
 
   final String audioUrl;
 
   @override
-  State<CustomPlayButton> createState() => _CustomPlayButtonState();
+  CustomPlayButtonState createState() => CustomPlayButtonState();
 }
 
-class _CustomPlayButtonState extends State<CustomPlayButton> {
+class CustomPlayButtonState extends ConsumerState<CustomPlayButton> {
   late AudioPlayer _audioPlayer;
   late double _progress = 0.0; // Nuevo
   bool _isCompleted = false;
@@ -31,34 +34,64 @@ class _CustomPlayButtonState extends State<CustomPlayButton> {
   @override
   void initState() {
     super.initState();
+    _initializeAudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  void _initializeAudioPlayer() async {
     _audioPlayer = AudioPlayer();
-    _audioPlayer.setUrl(widget.audioUrl);
+    if (widget.audioUrl.isNotEmpty) {
+      try {
+        await _audioPlayer.setUrl(widget.audioUrl);
+      } catch (e) {
+        //TODO : MANEJRA EXCEPTION
+      }
+    }
+
     _audioPlayer.positionStream.listen((Duration position) {
       if (mounted) {
         setState(() {
-          _progress = _audioPlayer.duration != null
+          _progress = _audioPlayer.duration != null &&
+                  _audioPlayer.duration!.inMilliseconds > 0
               ? position.inMilliseconds / _audioPlayer.duration!.inMilliseconds
               : 0.0;
         });
       }
     });
 
-    // Agregar el listener para la finalización del audio
     _audioPlayer.processingStateStream.listen((processingState) {
       if (mounted) {
         if (processingState == ProcessingState.completed) {
-          // Audio completado
           setState(() {
             _isCompleted = true;
           });
         } else {
-          // Reproducción en curso
           setState(() {
             _isCompleted = false;
           });
         }
+
+        if (processingState == ProcessingState.loading) {
+          ref.read(musicProvider.notifier).isLoading = true;
+        }
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant CustomPlayButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Si la URL del audio ha cambiado, actualiza el reproductor de audio
+    if (widget.audioUrl != oldWidget.audioUrl) {
+      _audioPlayer.dispose(); // Libera los recursos del reproductor anterior
+      _initializeAudioPlayer();
+    }
   }
 
   Color calculateProgressColor() {
@@ -125,11 +158,5 @@ class _CustomPlayButtonState extends State<CustomPlayButton> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
   }
 }

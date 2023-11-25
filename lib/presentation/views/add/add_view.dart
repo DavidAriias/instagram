@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:instagram/presentation/providers/camera/list_camera_provider.dart';
+import 'package:instagram/presentation/providers/music/music_provider.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -17,7 +18,7 @@ class AddView extends ConsumerWidget {
 
     final textStyle = Theme.of(context).textTheme;
 
-    final imagesList = ref.watch(listCameraProvider);
+    final imagesList = ref.watch(listCameraProvider);  
 
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
@@ -30,7 +31,9 @@ class AddView extends ConsumerWidget {
               ? Text('New post',
                   style: textStyle.titleMedium
                       ?.copyWith(fontWeight: FontWeight.w600))
-              : MusicPopUpSurface(),
+              : const MusicPopUpSurface(
+             
+              ),
           actions: [
             CustomTextButton(
               color: imagesList.isEmpty ? Colors.grey : Colors.blue,

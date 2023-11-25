@@ -4,3 +4,5 @@ export 'media/posts/post_use_case.dart';
 export 'auth/auth_usecase.dart';
 export 'search/search_use_case.dart';
 export 'camera/camera_use_case.dart';
+export 'media/music/music_use_case.dart';
+export 'auth/register_usecase.dart';

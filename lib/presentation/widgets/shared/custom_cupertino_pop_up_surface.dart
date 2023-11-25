@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 
 import '../widgets.dart';
 
@@ -9,19 +8,31 @@ class CustomCupertinoPopUpSurface extends StatelessWidget {
       this.color,
       required this.children,
       this.mainAxisAlignment = MainAxisAlignment.start,
-      this.crossAxisAlignment = CrossAxisAlignment.center, this.height});
+      this.crossAxisAlignment = CrossAxisAlignment.center,
+      this.height,
+      this.onVerticalDragStart,
+      this.onVerticalDragDown,
+      this.onVerticalDragEnd,
+      this.onVerticalDragUpdate});
 
   final Color? color;
   final List<Widget> children;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final double? height;
+  final void Function(DragStartDetails)? onVerticalDragStart;
+  final void Function(DragDownDetails)? onVerticalDragDown;
+  final void Function(DragEndDetails)? onVerticalDragEnd;
+  final void Function(DragUpdateDetails)? onVerticalDragUpdate;
 
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
-      onVerticalDragUpdate: (_) => context.pop(),
+      onVerticalDragStart: onVerticalDragStart,
+      onVerticalDragDown: onVerticalDragDown,
+      onVerticalDragEnd: onVerticalDragEnd,
+      onVerticalDragUpdate: onVerticalDragUpdate,
       child: CupertinoPopupSurface(
         child: Container(
             color: color,

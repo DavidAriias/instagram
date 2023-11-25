@@ -23,3 +23,5 @@ export '../models/graphql/response/user/search_user_response.dart';
 export '../models/graphql/input/password_input.dart';
 export '../models/graphql/response/user/change_password_response.dart';
 export '../models/graphql/input/image_input.dart';
+export '../models/graphql/input/song_input.dart';
+export '../models/graphql/response/music/search_song_response.dart';
