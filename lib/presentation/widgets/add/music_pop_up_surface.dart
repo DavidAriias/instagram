@@ -10,15 +10,18 @@ import 'package:instagram/presentation/widgets/widgets.dart';
 import '../../providers/music/music_provider.dart';
 
 class MusicPopUpSurface extends StatelessWidget {
-  const MusicPopUpSurface({super.key, this.onTap});
+  const MusicPopUpSurface({super.key, this.onSongSelected});
 
-  final FutureOr<void> Function()? onTap;
+  final FutureOr<void> Function()? onSongSelected;
 
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
 
     final textStyle = Theme.of(context).textTheme;
+    final iconColor = Theme.of(context).iconTheme.color;
+
+    final controller = TextEditingController();
 
     return CustomIconCupertinoButton(
       onPressed: () => showCupertinoModalPopup(
@@ -29,6 +32,7 @@ class MusicPopUpSurface extends StatelessWidget {
             return CustomCupertinoPopUpSurface(
               onVerticalDragUpdate: (_) {
                 context.pop();
+                controller.clear();
                 ref.read(musicProvider.notifier).onResetSongs();
               },
               height: deviceHeight / 1.1,
@@ -37,16 +41,20 @@ class MusicPopUpSurface extends StatelessWidget {
                   children: [
                     Flexible(
                       child: CupertinoSearchTextField(
-                        style: textStyle.titleSmall,
-                        autofocus: true,
-                        onChanged: ref.read(musicProvider.notifier).searchSongs,
-                        onSuffixTap:
-                            ref.read(musicProvider.notifier).onResetSongs,
-                      ),
+                          controller: controller,
+                          style: textStyle.titleSmall,
+                          autofocus: true,
+                          onChanged:
+                              ref.read(musicProvider.notifier).searchSongs,
+                          onSuffixTap: () {
+                            controller.clear();
+                            ref.read(musicProvider.notifier).onResetSongs();
+                          }),
                     ),
                     CustomTextButton(
                       textButton: 'Cancel',
                       onPressed: () {
+                        controller.clear();
                         context.pop();
                         ref.read(musicProvider.notifier).onResetSongs();
                       },
@@ -59,7 +67,7 @@ class MusicPopUpSurface extends StatelessWidget {
                     itemCount: songs.length,
                     itemBuilder: (context, index) => CupertinoListTile(
                       key: UniqueKey(),
-                      onTap: onTap,
+                      onTap: onSongSelected,
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: CustomCacheImageNetwork(
@@ -90,7 +98,7 @@ class MusicPopUpSurface extends StatelessWidget {
           },
         ),
       ),
-      child: const Icon(CupertinoIcons.music_note_2, color: Colors.white),
+      child: Icon(CupertinoIcons.music_note_2, color: iconColor),
     );
   }
 }

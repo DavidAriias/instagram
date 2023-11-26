@@ -1,5 +1,7 @@
+import '../../../domain/entities/entities.dart';
+
 class RegisterFormData {
-  final String? imageProfile;
+  final Media? imageProfile;
   final String? email;
   final String? phoneNumber;
   final String fullName;

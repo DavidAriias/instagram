@@ -5,3 +5,4 @@ export 'helpers/human_format_helper.dart';
 export 'helpers/string_helper.dart';
 export 'router/app_router.dart';
 export 'theme/app_theme.dart';
+export 'helpers/media_helper.dart';

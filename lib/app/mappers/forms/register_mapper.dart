@@ -7,7 +7,7 @@ class RegisterMapper {
       SignUpUserInput(
           birthday: value.birthday,
           email: value.email,
-          imageProfile: value.imageProfile,
+          imageProfile: value.imageProfile?.path,
           name: value.fullName,
           password: value.password,
           phoneNumber: value.phoneNumber,

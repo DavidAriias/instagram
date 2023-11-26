@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:instagram/presentation/providers/camera/list_camera_provider.dart';
-import 'package:instagram/presentation/providers/music/music_provider.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -18,7 +17,7 @@ class AddView extends ConsumerWidget {
 
     final textStyle = Theme.of(context).textTheme;
 
-    final imagesList = ref.watch(listCameraProvider);  
+    final imagesList = ref.watch(listCameraProvider);
 
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
@@ -31,14 +30,16 @@ class AddView extends ConsumerWidget {
               ? Text('New post',
                   style: textStyle.titleMedium
                       ?.copyWith(fontWeight: FontWeight.w600))
-              : const MusicPopUpSurface(
-             
-              ),
+              : MusicPopUpSurface(onSongSelected: () {
+                  context.pop();
+                  context.push('/share');
+                }),
           actions: [
             CustomTextButton(
               color: imagesList.isEmpty ? Colors.grey : Colors.blue,
               textButton: 'Next',
-              onPressed: imagesList.isEmpty ? null : () => {},
+              onPressed:
+                  imagesList.isEmpty ? null : () => context.push('/share'),
             )
           ],
         ),
@@ -51,7 +52,7 @@ class AddView extends ConsumerWidget {
               height: size.height / 2,
               child: (imagesList.isEmpty)
                   ? Container(
-                      color: Colors.white38,
+                      color: Colors.grey.shade400,
                       child: Center(
                           child: CustomIconCupertinoButton(
                               onPressed: ref
@@ -61,7 +62,7 @@ class AddView extends ConsumerWidget {
                                   CupertinoIcons.photo_on_rectangle,
                                   color: Colors.white,
                                   size: 100))))
-                  : ReordableImageList(imageExtent: size.width / 1.2),
+                  : ReordableMediaList(mediaExtent: size.width / 1.2),
             ),
             SizedBox(height: size.height / 6),
           ],

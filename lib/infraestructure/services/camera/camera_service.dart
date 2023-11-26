@@ -1,7 +1,9 @@
 
+import '../../../domain/entities/entities.dart';
+
 abstract class CameraService {
-  Future<String?> takePhoto();
-  Future<String?> selectPhoto();
-  Future<List<String>> selectMultipleMedia();
+  Future<Media?> takePhoto();
+  Future<Media?> selectPhoto();
+  Future<List<Media>> selectMultipleMedia();
   Future<String?> takeVideo();
 }

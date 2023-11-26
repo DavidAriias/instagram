@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:instagram/infraestructure/graphql_schemas/graphql_client.dart';
 import 'package:instagram/presentation/providers/music/music_provider.dart';
 import 'package:just_audio/just_audio.dart';
 

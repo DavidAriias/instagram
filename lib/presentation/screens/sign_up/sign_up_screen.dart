@@ -143,7 +143,7 @@ class _ImageProfileButton extends ConsumerWidget {
         children: [
           UserAvatarWithoutGradient(
             radius: 40,
-            image: imageProvider,
+            image: imageProvider?.path,
           ),
           Positioned(
             bottom: -2,

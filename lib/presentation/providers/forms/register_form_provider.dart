@@ -5,6 +5,7 @@ import 'package:instagram/infraestructure/inputs/inputs.dart';
 import 'package:instagram/presentation/enums/enums.dart';
 import 'package:instagram/presentation/providers/providers.dart';
 import '../../../config/config.dart';
+import '../../../domain/entities/entities.dart';
 import '../../../domain/enums/auth_method.dart';
 
 final registerFormProvider =
@@ -23,7 +24,7 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
         state.copyWith(isPosting: false, isValid: false, isFormPosted: false);
   }
 
-  void onSelectPhoto(String? value) {
+  void onSelectPhoto(Media? value) {
     state = state.copyWith(imageProfile: value);
   }
 
@@ -116,7 +117,7 @@ class RegisterFormState {
   final Password password;
   final Birthday birthday;
   final FullName fullName;
-  final String? imageProfile;
+  final Media? imageProfile;
   final Username username;
   final AuthMethod authMethod;
   final RegisterStatus registerStatus;
@@ -142,7 +143,7 @@ class RegisterFormState {
           Password? password,
           Birthday? birthday,
           FullName? fullName,
-          String? imageProfile,
+          Media? imageProfile,
           Username? username,
           AuthMethod? authMethod,
           RegisterStatus? registerStatus}) =>

@@ -4,34 +4,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagram/presentation/providers/providers.dart';
 import 'package:instagram/presentation/widgets/widgets.dart';
+import 'package:video_player/video_player.dart';
 
-class ReordableImageList extends ConsumerStatefulWidget {
-  const ReordableImageList({super.key, this.imageExtent});
+import '../../../domain/entities/entities.dart';
 
-  final double? imageExtent;
+class ReordableMediaList extends ConsumerStatefulWidget {
+  const ReordableMediaList({super.key, this.mediaExtent});
+
+  final double? mediaExtent;
 
   @override
   ReordableImageListState createState() => ReordableImageListState();
 }
 
-class ReordableImageListState extends ConsumerState<ReordableImageList> {
+class ReordableImageListState extends ConsumerState<ReordableMediaList> {
   @override
   Widget build(BuildContext context) {
-    final images = ref.watch(listCameraProvider);
+    final media = ref.watch(listCameraProvider);
     return ReorderableListView.builder(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      itemExtent: widget.imageExtent,
+      itemExtent: widget.mediaExtent,
       scrollDirection: Axis.horizontal,
-      itemCount: images.length < 10 ? images.length + 1 : 10,
+      itemCount: media.length < 10 ? media.length + 1 : 10,
       itemBuilder: (context, index) {
-        if (index < images.length) {
-          return _ImageStack(
+        if (index < media.length) {
+          return _MediaStack(
             currentIndex: index,
-            imageLength: images.length,
+            mediaLength: media.length,
             key: Key('$index'),
-            image: images[index],
-            imageExtent: widget.imageExtent,
+            media: media[index],
+            mediaExtent: widget.mediaExtent,
             onRemove: () {
               setState(() {
                 ref.read(listCameraProvider.notifier).onRemove(index);
@@ -40,14 +43,14 @@ class ReordableImageListState extends ConsumerState<ReordableImageList> {
           );
         } else {
           // Elemento adicional al final de la lista si hay menos de 10 imágenes
-          return _AddImages(
+          return _AddMoreMedia(
             key: const Key('addImages'),
-            imageExtent: widget.imageExtent,
+            mediaExtent: widget.mediaExtent,
           );
         }
       },
       onReorder: (oldIndex, newIndex) {
-        if (oldIndex + 1 == images.length + 1) return;
+        if (oldIndex + 1 == media.length + 1) return;
 
         setState(() {
           if (newIndex > oldIndex) {
@@ -61,21 +64,39 @@ class ReordableImageListState extends ConsumerState<ReordableImageList> {
   }
 }
 
-class _ImageStack extends StatelessWidget {
-  const _ImageStack({
+class _MediaStack extends StatefulWidget {
+  const _MediaStack({
     super.key,
-    required this.image,
-    this.imageExtent,
+    required this.media,
+    this.mediaExtent,
     required this.onRemove,
     required this.currentIndex,
-    required this.imageLength,
+    required this.mediaLength,
   });
 
-  final String image;
-  final double? imageExtent;
+  final Media media;
+  final double? mediaExtent;
   final VoidCallback onRemove;
   final int currentIndex;
-  final int imageLength;
+  final int mediaLength;
+
+  @override
+  State<_MediaStack> createState() => _MediaStackState();
+}
+
+class _MediaStackState extends State<_MediaStack> {
+  //late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +105,13 @@ class _ImageStack extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image(
-            fit: BoxFit.cover,
-            image: FileImage(File(image)),
-          ),
+          (!widget.media.isImage)
+          //TODO: EVITAR REDIBUJO DE LOS WIDGETS Y CHECAR LO DEL CONTROLLER
+              ? CustomVideoPlayer(videoController: VideoPlayerController.file(File(widget.media.path))..play()..setVolume(1))
+              : Image(
+                  fit: BoxFit.contain,
+                  image: FileImage(File(widget.media.path)),
+                ),
           CustomGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -98,14 +122,15 @@ class _ImageStack extends StatelessWidget {
             top: 10,
             right: 10,
             child: CustomIconCupertinoButton(
-              onPressed: onRemove,
+              onPressed: widget.onRemove,
               child: const Icon(Icons.close, color: Colors.white),
             ),
           ),
           ImageCounter(
             showCounter: true,
-            currentIndex: currentIndex, // Asegúrate de definir currentIndex
-            imagesLength: imageLength, // Asegúrate de definir images
+            currentIndex:
+                widget.currentIndex, // Asegúrate de definir currentIndex
+            imagesLength: widget.mediaLength, // Asegúrate de definir media
             top: 10,
             left: 10,
           ),
@@ -115,17 +140,17 @@ class _ImageStack extends StatelessWidget {
   }
 }
 
-class _AddImages extends ConsumerWidget {
-  const _AddImages({super.key, this.imageExtent});
+class _AddMoreMedia extends ConsumerWidget {
+  const _AddMoreMedia({super.key, this.mediaExtent});
 
-  final double? imageExtent;
+  final double? mediaExtent;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: SizedBox(
-        width: imageExtent,
+        width: mediaExtent,
         child: Center(
             child: CustomIconCupertinoButton(
                 onPressed: ref.read(listCameraProvider.notifier).selectMedia,

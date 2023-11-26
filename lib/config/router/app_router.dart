@@ -59,13 +59,6 @@ final goRouterProvider = Provider((ref) {
                     path: '/add',
                     name: AddScreen.name,
                     builder: (context, state) => const AddView(),
-                    routes: [
-                      GoRoute(
-                      path: 'music',
-                      name: AddMusicScreen.name,
-                      builder: (context,state) => const AddMusicScreen()
-                      )
-                    ]
                   ),
                   GoRoute(
                       path: '/reel',
@@ -76,6 +69,10 @@ final goRouterProvider = Provider((ref) {
                       name: CreateStoryScreen.name,
                       builder: (context, state) => const CreateStoryScreen())
                 ]),
+            GoRoute(
+                path: '/share',
+                name: SharePostScreen.name,
+                builder: (context, state) => const SharePostScreen()),
             GoRoute(
               path: '/reels',
               name: ReelScreen.name,
