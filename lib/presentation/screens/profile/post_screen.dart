@@ -28,7 +28,7 @@ class _PostView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(mainUserProvider);
-    final posts = ref.watch(postProvider);
+    final posts = ref.watch(listPostProvider);
 
     final textStyle = Theme.of(context).textTheme;
     final iconColor = Theme.of(context).iconTheme.color;

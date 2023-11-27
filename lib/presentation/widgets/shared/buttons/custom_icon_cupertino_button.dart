@@ -7,7 +7,7 @@ class CustomIconCupertinoButton extends StatelessWidget {
     required this.child});
 
   final void Function()? onPressed;
-  final Icon child;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

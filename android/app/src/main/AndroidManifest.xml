@@ -3,6 +3,8 @@
      <!--Requesting access to images and videos.-->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--When your app has no need to access audio, remove it or comment it out.-->
     <!--<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />-->
     <application

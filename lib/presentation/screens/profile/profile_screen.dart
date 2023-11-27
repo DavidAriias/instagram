@@ -39,7 +39,7 @@ class ProfileViewState extends ConsumerState<_ProfileView> {
   @override
   void initState() {
     super.initState();
-    ref.read(postProvider.notifier).fetchPostsFromUser();
+    ref.read(listPostProvider.notifier).fetchPostsFromUser();
   }
 
   @override
@@ -55,7 +55,7 @@ class ProfileViewState extends ConsumerState<_ProfileView> {
     final height = MediaQuery.of(context).size.height;
     final profile = ref.watch(profileProvider);
 
-    final posts = ref.watch(postProvider);
+    final posts = ref.watch(listPostProvider);
     final mainUserId = ref.watch(mainUserProvider).id;
 
     return RefreshIndicator(

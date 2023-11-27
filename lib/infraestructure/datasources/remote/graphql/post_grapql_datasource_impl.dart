@@ -2,11 +2,11 @@ import 'package:graphql/client.dart';
 import 'package:instagram/domain/datasources/remote/post_datasource.dart';
 import 'package:instagram/infraestructure/errors/post_error.dart';
 import 'package:instagram/infraestructure/graphql_schemas/queries/post_queries.dart';
-import '../../../domain/entities/entities.dart';
-import '../../graphql_schemas/graphql.dart';
-import '../../graphql_schemas/graphql_client.dart';
-import '../../mappers/post_mapper.dart';
-import '../../models/models.dart';
+import '../../../../domain/entities/entities.dart';
+import '../../../graphql_schemas/graphql.dart';
+import '../../../graphql_schemas/graphql_client.dart';
+import '../../../mappers/post_mapper.dart';
+import '../../../models/models.dart';
 
 class PostGraphQlDatasourceImpl extends PostDataSource {
   @override

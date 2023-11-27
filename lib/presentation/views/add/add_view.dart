@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:instagram/presentation/providers/camera/list_camera_provider.dart';
+import 'package:instagram/presentation/providers/providers.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -30,16 +31,22 @@ class AddView extends ConsumerWidget {
               ? Text('New post',
                   style: textStyle.titleMedium
                       ?.copyWith(fontWeight: FontWeight.w600))
-              : MusicPopUpSurface(onSongSelected: () {
+              : MusicPopUpSurface(
+                onSongSelected: () {
+                  ref.read(listCameraProvider.notifier).onSend();
                   context.pop();
-                  context.push('/share');
+                  context.push('/share/');
                 }),
           actions: [
             CustomTextButton(
               color: imagesList.isEmpty ? Colors.grey : Colors.blue,
               textButton: 'Next',
-              onPressed:
-                  imagesList.isEmpty ? null : () => context.push('/share'),
+              onPressed: imagesList.isEmpty
+                  ? null
+                  : () {
+                      ref.read(listCameraProvider.notifier).onSend();
+                      context.push('/share');
+                    },
             )
           ],
         ),

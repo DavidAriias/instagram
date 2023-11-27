@@ -15,4 +15,4 @@ export 'profile/edit/edit_screen.dart';
 export 'profile/edit/edit_field_screen.dart';
 export '../screens/profile/pop_up_options/meta_verified_screen.dart';
 export 'shared/create_reel_screen.dart';
-export 'shared/add_music_screen.dart';
+export 'shared/share_post_screen.dart';

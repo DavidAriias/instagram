@@ -10,8 +10,8 @@ import 'package:instagram/presentation/widgets/widgets.dart';
 
 import '../../providers/music/list_music_provider.dart';
 
-class MusicPopUpSurface extends ConsumerWidget {
-  const MusicPopUpSurface({super.key, this.onSongSelected});
+class LocationPopUpSurface extends ConsumerWidget {
+  const LocationPopUpSurface({super.key, this.onSongSelected});
 
   final FutureOr<void> Function()? onSongSelected;
 
@@ -112,6 +112,6 @@ class MusicPopUpSurface extends ConsumerWidget {
                 },
               ),
             ),
-        child:  Icon(CupertinoIcons.music_note_2, color: iconColor));
+        child:  Icon(CupertinoIcons.chevron_forward, color: iconColor));
   }
 }

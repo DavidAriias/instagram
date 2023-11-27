@@ -1,6 +1,18 @@
-class Location {
-  final double latitude;
-  final double longitude;
+class LocationEntity {
+  final double? latitude;
+  final double? longitude;
+  final String? name;
+  final String? country;
+  final String? state;
+  final String? city;
+  final String? locationId;
 
-  Location({required this.latitude, required this.longitude});
+  LocationEntity(
+      {this.country,
+      this.state,
+      this.city,
+      this.latitude,
+      this.longitude,
+      this.name,
+      this.locationId});
 }

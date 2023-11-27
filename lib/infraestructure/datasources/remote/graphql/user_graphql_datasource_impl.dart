@@ -2,11 +2,11 @@ import 'package:graphql/client.dart';
 import 'package:instagram/infraestructure/errors/user_error.dart';
 import 'package:instagram/infraestructure/graphql_schemas/graphql.dart';
 
-import '../../../domain/datasources/datasource.dart';
-import '../../../domain/entities/entities.dart';
-import '../../graphql_schemas/graphql_client.dart';
-import '../../mappers/user_mapper.dart';
-import '../../models/models.dart';
+import '../../../../domain/datasources/datasource.dart';
+import '../../../../domain/entities/entities.dart';
+import '../../../graphql_schemas/graphql_client.dart';
+import '../../../mappers/user_mapper.dart';
+import '../../../models/models.dart';
 
 class UserGraphQlDatasourceImpl extends UserDataSource {
   @override

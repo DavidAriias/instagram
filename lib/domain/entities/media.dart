@@ -4,7 +4,7 @@ class Media {
   final String path;
   final int width;
   final int height;
-  final Location? location;
+  final LocationEntity? location;
   final bool isImage;
 
   Media(

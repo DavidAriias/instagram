@@ -4,13 +4,13 @@ import 'package:instagram/domain/entities/auth.dart';
 
 import 'package:instagram/infraestructure/errors/auth_error.dart';
 
-import '../../../domain/datasources/datasource.dart';
+import '../../../../domain/datasources/datasource.dart';
 
-import '../../graphql_schemas/graphql.dart';
-import '../../graphql_schemas/graphql_client.dart';
+import '../../../graphql_schemas/graphql.dart';
+import '../../../graphql_schemas/graphql_client.dart';
 
-import '../../mappers/auth_mapper.dart';
-import '../../models/models.dart';
+import '../../../mappers/auth_mapper.dart';
+import '../../../models/models.dart';
 
 class AuthGraphQlDatasourceImpl extends AuthDataSource {
   @override

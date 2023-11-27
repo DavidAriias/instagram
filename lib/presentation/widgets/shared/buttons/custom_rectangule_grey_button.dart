@@ -25,7 +25,7 @@ class CustomButtonRectanguleGrey extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: Colors.grey.shade300,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: child,

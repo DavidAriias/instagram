@@ -10,6 +10,7 @@ class CameraServiceImpl extends CameraService {
 
   @override
   Future<List<Media>> selectMultipleMedia() async {
+
     final List<XFile> medias =
         await _imagePicker.pickMultipleMedia(imageQuality: 100);
 

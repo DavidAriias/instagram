@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:instagram/presentation/providers/music/music_provider.dart';
+import 'package:instagram/presentation/providers/music/list_music_provider.dart';
 import 'package:just_audio/just_audio.dart';
 
 class CustomPlayButton extends ConsumerStatefulWidget {
@@ -76,7 +76,7 @@ class CustomPlayButtonState extends ConsumerState<CustomPlayButton> {
         }
 
         if (processingState == ProcessingState.loading) {
-          ref.read(musicProvider.notifier).isLoading = true;
+          ref.read(listMusicProvider.notifier).isLoading = true;
         }
       }
     });

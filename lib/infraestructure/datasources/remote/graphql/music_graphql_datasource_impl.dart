@@ -5,8 +5,8 @@ import 'package:instagram/infraestructure/graphql_schemas/graphql.dart';
 import 'package:instagram/infraestructure/graphql_schemas/graphql_client.dart';
 import 'package:instagram/infraestructure/mappers/music_mapper.dart';
 
-import '../../../domain/entities/entities.dart';
-import '../../models/models.dart';
+import '../../../../domain/entities/entities.dart';
+import '../../../models/models.dart';
 
 class MusicGraphQlDatasourceImpl extends MusicDataSource {
   
