@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram/config/helpers/date_helper.dart';
 
+import '../../../../domain/entities/entities.dart';
 import '../../widgets.dart';
 
 class ColumnDescription extends StatelessWidget {
@@ -9,12 +10,14 @@ class ColumnDescription extends StatelessWidget {
       required this.username,
       required this.caption,
       required this.comments,
-      required this.datePublication});
+      required this.datePublication,
+      required this.likes});
 
   final String username;
   final String caption;
-  final int comments;
+  final int likes;
   final DateTime datePublication;
+  final List<Comment> comments;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +28,16 @@ class ColumnDescription extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Liked by _yujin_an and 123,486 others',
-                style: textStyle.titleMedium),
-            ExpandText(username: username, text: caption),
-            CommentButton(comments: comments),
-            _DateMedia(
-              datePublication: datePublication,
-              textStyle: textStyle)
+            (likes > 0)
+                ? Text(likes.toString(), style: textStyle.titleMedium)
+                : const SizedBox.shrink(),
+            (caption.isNotEmpty)
+                ? ExpandText(username: username, text: caption)
+                : const SizedBox.shrink(),
+            (comments.isNotEmpty)
+                ? CommentButton(comments: comments.length)
+                : const SizedBox.shrink(),
+            _DateMedia(datePublication: datePublication, textStyle: textStyle)
           ],
         ));
   }
@@ -39,7 +45,7 @@ class ColumnDescription extends StatelessWidget {
 
 class _DateMedia extends StatelessWidget {
   const _DateMedia({
-    required this.textStyle, 
+    required this.textStyle,
     required this.datePublication,
   });
 

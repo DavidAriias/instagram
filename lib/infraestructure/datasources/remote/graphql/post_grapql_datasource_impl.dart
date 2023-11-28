@@ -36,4 +36,23 @@ class PostGraphQlDatasourceImpl extends PostDataSource {
       throw PostException(e.message);
     }
   }
+
+  @override
+  Future<String> createPost(CreatePostInput input) async {
+    final client = await initializeGraphQLClient(input.accessToken);
+
+    final options = MutationOptions(
+        document: gql(PostMutations.createPost),
+        variables: input.toJson());
+
+    try {
+      final QueryResult result = await client.mutate(options);
+      if (result.hasException) {
+        throw PostException(result.exception!.graphqlErrors.first.message);
+      }
+      return 'xd';
+    } on PostException catch (e) {
+      throw PostException(e.message);
+    }
+  }
 }

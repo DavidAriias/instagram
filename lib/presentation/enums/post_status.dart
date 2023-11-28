@@ -1,0 +1,1 @@
+enum PostStatus {editing,posting,error}

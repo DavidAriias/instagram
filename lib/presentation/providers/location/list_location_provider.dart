@@ -10,16 +10,25 @@ final listLocationProvider =
 
 class ListLocationNotifier extends StateNotifier<List<LocationEntity>> {
   final LocationUseCase _locationUseCase;
+  bool isLoading = false;
   ListLocationNotifier(this._locationUseCase) : super([]);
 
   Future<void> getLocationByName(String locationName) async {
-    state = await _locationUseCase.getLocationByName(locationName);
+    if (isLoading) return;
+
+    isLoading = true;
+
+    final locations = await _locationUseCase.getLocationByName(locationName);
+    state = [...locations];
+
+    await Future.delayed(const Duration(milliseconds: 200));
+    isLoading = false;
   }
+
 
   Future<void> getLocationsByCurrentLocation() async {
     if (state.isNotEmpty) return;
     final currentLocation = await _locationUseCase.getCurrentLocation();
     state = await _locationUseCase.getLocationByCoordinates(currentLocation);
   }
-  
 }

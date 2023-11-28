@@ -14,6 +14,7 @@ class MainUserNotifier extends StateNotifier<User> {
 
   Future<User> getDetailsMainProfile() async {
     //TODO : REFACTORIZAR EL AUTH PONIENDO EN LUGAR DE LA LLAMADA AL GET LOCAL AUTH COMO CALLBACK
+    if (state.id.isNotEmpty) return state;
     final auth = await _authUseCase.getLocalAuth();
     final user = await _userUseCase.getUserDetails(auth!);
     state = user;
@@ -29,5 +30,4 @@ class MainUserNotifier extends StateNotifier<User> {
     final auth = await _authUseCase.getLocalAuth();
     return await _userUseCase.updateVerified(auth!);
   }
-
 }

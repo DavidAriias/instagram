@@ -33,7 +33,6 @@ class AddView extends ConsumerWidget {
                       ?.copyWith(fontWeight: FontWeight.w600))
               : MusicPopUpSurface(
                 onSongSelected: () {
-                  ref.read(listCameraProvider.notifier).onSend();
                   context.pop();
                   context.push('/share/');
                 }),
@@ -44,6 +43,7 @@ class AddView extends ConsumerWidget {
               onPressed: imagesList.isEmpty
                   ? null
                   : () {
+                      ref.watch(listLocationProvider.notifier).getLocationsByCurrentLocation();
                       ref.read(listCameraProvider.notifier).onSend();
                       context.push('/share');
                     },

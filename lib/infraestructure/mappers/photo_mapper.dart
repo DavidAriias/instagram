@@ -15,6 +15,7 @@ class MediaMapper {
 
     if (imageFile != null) {
       return Media(
+        file: file,
         path: image.path,
         width: imageFile.width,
         height: imageFile.height,

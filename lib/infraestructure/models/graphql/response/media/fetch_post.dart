@@ -10,10 +10,6 @@ class FetchPostResponse {
     factory FetchPostResponse.fromJson(Map<String, dynamic> json) => FetchPostResponse(
         userProfile: PostsResponse.fromJson(json["userProfile"]),
     );
-
-    Map<String, dynamic> toJson() => {
-        "userProfile": userProfile.toJson(),
-    };
 }
 
 class PostsResponse {
@@ -27,10 +23,7 @@ class PostsResponse {
         posts: Posts.fromJson(json["posts"]),
     );
 
-    Map<String, dynamic> toJson() => {
-        "posts": posts.toJson(),
-    };
-}
+ }
 
 class Posts {
     final PageInfo pageInfo;
@@ -46,10 +39,6 @@ class Posts {
         nodes: List<PostsNode>.from(json["nodes"].map((x) => PostsNode.fromJson(x))),
     );
 
-    Map<String, dynamic> toJson() => {
-        "pageInfo": pageInfo.toJson(),
-        "nodes": List<dynamic>.from(nodes.map((x) => x.toJson())),
-    };
 }
 
 class PostsNode {
@@ -57,11 +46,11 @@ class PostsNode {
     final String? imageProfile;
     final String postId;
     final List<String> images;
-    final String caption;
+    final String? caption;
     final DateTime datePublication;
     final int likes;
-    final Comments comments;
-    final List<String> hashtags;
+    final Comments? comments;
+    final List<String>? hashtags;
 
     PostsNode({
         required this.song,
@@ -83,21 +72,11 @@ class PostsNode {
         caption: json["caption"],
         datePublication: DateTime.parse(json["datePublication"]),
         likes: json["likes"],
-        comments: Comments.fromJson(json["comments"]),
-        hashtags: List<String>.from(json["hashtags"].map((x) => x)),
+        comments: (json["comments"] != null) ?  Comments.fromJson(json["comments"]) : null,
+      hashtags: (json["hashtags"] != null) ? List<String>.from(json["hashtags"].map((x) => x)) : null,
+
     );
 
-    Map<String, dynamic> toJson() => {
-        "song": song,
-        "imageProfile": imageProfile,
-        "postId": postId,
-        "images": List<String>.from(images.map((x) => x)),
-        "caption": caption,
-        "datePublication": datePublication.toIso8601String(),
-        "likes": likes,
-        "comments": comments.toJson(),
-        "hashtags": List<String>.from(hashtags.map((x) => x)),
-    };
 }
 
 

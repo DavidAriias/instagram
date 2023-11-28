@@ -13,6 +13,14 @@ class SharePostScreen extends ConsumerWidget {
   static const String name = 'share-post-screen';
   const SharePostScreen({super.key});
 
+  void showSnackBar(BuildContext context, String message) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    });
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textStyle = Theme.of(context).textTheme;
@@ -22,10 +30,13 @@ class SharePostScreen extends ConsumerWidget {
     final labelTextStyle =
         textStyle.bodyLarge?.copyWith(fontWeight: FontWeight.w400);
 
-    ref.watch(listLocationProvider.notifier).getLocationsByCurrentLocation();
-
     final post = ref.watch(postProvider);
     final locations = ref.watch(listLocationProvider);
+
+    ref.listen(postProvider, (previous, next) {
+      if (next.errorMessage.isEmpty) return;
+      showSnackBar(context, next.errorMessage);
+    });
 
     return Scaffold(
       body: CustomScrollView(
@@ -52,14 +63,16 @@ class SharePostScreen extends ConsumerWidget {
             child: Column(
               children: [
                 CustomCupertinoTextField(
-                  initialText: ref.read(postProvider).caption,
                   prefix: Image(
                     fit: BoxFit.scaleDown,
                     width: 80,
                     height: 80,
                     image: FileImage(File(post.media.first.path)),
                   ),
-                  placeholder: 'Write a caption...',
+                  readOnly: false,
+                  placeholder: ref.read(postProvider).caption.isEmpty
+                      ? 'Write a caption...'
+                      : ref.read(postProvider).caption,
                   onChanged: ref.read(postProvider.notifier).onChangeCaption,
                 ),
                 Divider(color: dividerColor),
@@ -67,14 +80,15 @@ class SharePostScreen extends ConsumerWidget {
                     ? CustomCupertinoTextField(
                         readOnly: true,
                         prefix: Text('Add location', style: labelTextStyle),
-                        suffix: const Icon(CupertinoIcons.chevron_forward,
-                            color: Colors.grey),
-                      )
+                        suffix: const LocationPopUpSurface())
                     : CustomCupertinoTextField(
                         onTap: ref.read(postProvider.notifier).onResetLocation,
                         readOnly: true,
-                        prefix:
-                            Text(post.location!.name!, style: labelTextStyle),
+                        prefix: Text(
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            post.location!.name,
+                            style: labelTextStyle),
                         suffix: const Icon(Icons.close, color: Colors.grey)),
                 (post.location == null)
                     ? _ListOptions(options: locations)
@@ -96,7 +110,7 @@ class SharePostScreen extends ConsumerWidget {
                           alignment: Alignment.center,
                           width: double.infinity,
                           child: Text('${post.song!.name}-${post.song!.artist}',
-                          overflow: TextOverflow.ellipsis,
+                              overflow: TextOverflow.ellipsis,
                               style: textStyle.labelLarge
                                   ?.copyWith(color: Colors.black)),
                         ),
@@ -138,7 +152,7 @@ class _ListOptions extends ConsumerWidget {
                       .onChangeLocation(options[index]),
                   child: Text(
                     maxLines: 1,
-                    options[index].name!,
+                    options[index].name,
                     overflow: TextOverflow.ellipsis,
                     style: textStyle.labelLarge?.copyWith(color: Colors.black),
                   ),

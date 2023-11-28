@@ -31,9 +31,10 @@ class FeedPost extends StatelessWidget {
         ),
         ColumnDescription(
           username: username,
-          caption: post.caption,
-          comments: post.likes,
-          datePublication: post.datePublication,
+          caption: post.caption ?? '',
+          comments: post.comments ?? [],
+          datePublication: post.datePublication, 
+          likes: post.likes,
         )
       ],
     );

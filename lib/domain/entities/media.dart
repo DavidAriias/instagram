@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:instagram/domain/entities/entities.dart';
 
 class Media {
@@ -6,11 +8,14 @@ class Media {
   final int height;
   final LocationEntity? location;
   final bool isImage;
+  final File? file;
 
   Media(
       {required this.path,
       required this.width,
       required this.height,
       this.location,
-      required this.isImage});
+      required this.isImage,
+      this.file
+      });
 }

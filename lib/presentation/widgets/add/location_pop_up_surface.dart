@@ -4,11 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:instagram/config/config.dart';
 import 'package:instagram/presentation/providers/providers.dart';
 import 'package:instagram/presentation/widgets/widgets.dart';
-
-import '../../providers/music/list_music_provider.dart';
 
 class LocationPopUpSurface extends ConsumerWidget {
   const LocationPopUpSurface({super.key, this.onSongSelected});
@@ -20,22 +17,22 @@ class LocationPopUpSurface extends ConsumerWidget {
     final deviceHeight = MediaQuery.of(context).size.height;
 
     final textStyle = Theme.of(context).textTheme;
-    final iconColor = Theme.of(context).iconTheme.color;
 
     final controller = TextEditingController();
+    final dividerColor = Colors.grey.shade300.withOpacity(0.3);
 
     return CustomIconCupertinoButton(
         onPressed: () => showCupertinoModalPopup(
               context: context,
               builder: (context) => Consumer(
                 builder: (context, ref, child) {
-                  final songs = ref.watch(listMusicProvider);
+                  final locations = ref.watch(listLocationProvider);
                   return CustomCupertinoPopUpSurface(
                     onVerticalDragUpdate: (_) {
                       context.pop();
                       controller.clear();
-                      ref.read(listMusicProvider.notifier).onResetSongs();
                     },
+                    // TODO: CHECAR LA NAVEGACION
                     height: deviceHeight / 1.1,
                     children: [
                       Row(
@@ -46,13 +43,10 @@ class LocationPopUpSurface extends ConsumerWidget {
                                 style: textStyle.titleSmall,
                                 autofocus: true,
                                 onChanged: ref
-                                    .read(listMusicProvider.notifier)
-                                    .searchSongs,
+                                    .read(listLocationProvider.notifier)
+                                    .getLocationByName,
                                 onSuffixTap: () {
                                   controller.clear();
-                                  ref
-                                      .read(listMusicProvider.notifier)
-                                      .onResetSongs();
                                 }),
                           ),
                           CustomTextButton(
@@ -60,58 +54,41 @@ class LocationPopUpSurface extends ConsumerWidget {
                             onPressed: () {
                               controller.clear();
                               context.pop();
-                              ref
-                                  .read(listMusicProvider.notifier)
-                                  .onResetSongs();
                             },
                           )
                         ],
                       ),
                       Flexible(
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: songs.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                            onDoubleTap: () {
-                              ref.read(listCameraProvider.notifier).onSend();
-                              ref
-                                  .read(musicProvider.notifier)
-                                  .onSelectedSong(songs[index]);
-                              songs[index];
-                              onSongSelected?.call();
-                            },
-                            child: CupertinoListTile(
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: CustomCacheImageNetwork(
-                                  placeholder: (context, string) =>
-                                      const ShimmerEffect(),
-                                  imageUrl: songs[index].imagesUrl!.first,
+                        child: ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                Divider(color: dividerColor),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: locations.length,
+                            itemBuilder: (context, index) {
+                              final currentLocation = locations[index];
+                              return CupertinoListTile(
+                                onTap: () {
+                                  ref
+                                      .read(postProvider.notifier)
+                                      .onChangeLocation(currentLocation);
+                                },
+                                title: Text(currentLocation.name,
+                                    style: textStyle.bodyLarge),
+                                subtitle: Text(
+                                  style: textStyle.bodyMedium
+                                      ?.copyWith(color: Colors.grey),
+                                  '${currentLocation.city}${currentLocation.city.isNotEmpty ? ',' : ''}'
+                                  '${currentLocation.state}${currentLocation.state.isNotEmpty ? ',' : ''}'
+                                  '${currentLocation.country}',
                                 ),
-                              ),
-                              leadingSize: 60,
-                              title: Text(songs[index].name,
-                                  style: textStyle.bodyLarge),
-                              subtitle: Text(
-                                '${songs[index].artist} - ${HumanFormatHelper.timeFormatter(songs[index].duration)}',
-                                style: textStyle.bodyMedium
-                                    ?.copyWith(color: Colors.white54),
-                              ),
-                              trailing: CustomPlayButton(
-                                key:
-                                    UniqueKey(), // Añade una clave única para forzar la reconstrucción del widget cuando cambia la URL
-                                audioUrl: songs[index].previewUrl,
-                              ),
-                              padding: const EdgeInsets.all(5),
-                            ),
-                          ),
-                        ),
+                              );
+                            }),
                       ),
                     ],
                   );
                 },
               ),
             ),
-        child:  Icon(CupertinoIcons.chevron_forward, color: iconColor));
+        child: const Icon(CupertinoIcons.chevron_forward, color: Colors.grey));
   }
 }

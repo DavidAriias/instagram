@@ -3,8 +3,7 @@ import 'package:instagram/domain/entities/entities.dart';
 import 'package:instagram/infraestructure/models/models.dart';
 
 class LocationMapper {
-  static LocationEntity mapLocationDataToLocationEntity(
-          Position location) =>
+  static LocationEntity mapLocationDataToLocationEntity(Position location) =>
       LocationEntity(
           latitude: location.latitude, longitude: location.longitude);
 
@@ -14,14 +13,23 @@ class LocationMapper {
         latitude: feature.geometry.coordinates[1],
         longitude: feature.geometry.coordinates[0],
         name: feature.placeName,
-        country: feature.context
-            .firstWhere((context) => context.id.startsWith('country'))
-            .text,
-        state: feature.context
-            .firstWhere((context) => context.id.startsWith('region'))
-            .text,
-        city: feature.context
-            .firstWhere((context) => context.id.startsWith('place'))
-            .text,
+        country:  feature.context.isNotEmpty
+            ? feature.context
+                .firstWhere((context) => context.id.startsWith('country'),
+                    orElse: () => Context(id: '', mapboxId: '', text: ''))
+                .text
+            : '',
+        state: feature.context.isNotEmpty
+            ? feature.context
+                .firstWhere((context) => context.id.startsWith('place'),
+                    orElse: () => Context(id: '', mapboxId: '', text: ''))
+                .text
+            : '',
+        city:  feature.context.isNotEmpty
+            ? feature.context
+                .firstWhere((context) => context.id.startsWith('city'),
+                    orElse: () => Context(id: '', mapboxId: '', text: ''))
+                .text
+            : '',
       );
 }

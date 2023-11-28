@@ -10,5 +10,12 @@ class PostMapper {
       mediaUrls: postNode.images,
       likes: postNode.likes,
       imageProfile: postNode.imageProfile,
-    );
+      comments: (postNode.comments != null)
+          ? postNode.comments!.nodes
+              .map((comment) => mapCommentNodeToCommentEntity(comment))
+              .toList()
+          : null);
+
+  static Comment mapCommentNodeToCommentEntity(CommentsNode comment) =>
+      Comment(text: comment.text, userId: comment.userId, date: comment.date);
 }

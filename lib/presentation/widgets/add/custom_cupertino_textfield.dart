@@ -9,7 +9,7 @@ class CustomCupertinoTextField extends StatelessWidget {
       this.placeholder,
       this.onChanged,
       this.readOnly = false,
-      this.onTap, this.initialText});
+      this.onTap});
 
   final Widget? prefix;
   final Widget? suffix;
@@ -17,19 +17,15 @@ class CustomCupertinoTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function()? onTap;
   final bool readOnly;
-  final String? initialText;
 
   @override
   Widget build(BuildContext context) {
     final backgroundColorDevice = Theme.of(context).colorScheme.background;
     final textStyle = Theme.of(context).textTheme;
-    final TextEditingController controller =
-        TextEditingController(text: initialText);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: CupertinoTextField(
-        controller: controller,
         style: textStyle.bodyMedium,
         readOnly: readOnly,
         onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),

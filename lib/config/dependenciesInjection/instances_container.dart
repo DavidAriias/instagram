@@ -1,8 +1,11 @@
 import 'package:instagram/app/useCases/location/location_use_case.dart';
 import 'package:instagram/app/useCases/uses_cases.dart';
+import 'package:instagram/domain/datasources/datasource.dart';
+import 'package:instagram/infraestructure/datasources/remote/firebase/storage/firebase_storage.datasource_impl.dart';
 import 'package:instagram/infraestructure/datasources/remote/mapbox/location_mapbox_datasource_impl.dart';
 
 import 'package:instagram/infraestructure/repositories/remote/post_repository_impl.dart';
+import 'package:instagram/infraestructure/repositories/remote/storage_repository_impl.dart';
 import 'package:instagram/infraestructure/services/services.dart';
 
 import '../../infraestructure/datasources/datasources.dart';
@@ -19,6 +22,7 @@ final userDataSource = UserGraphQlDatasourceImpl();
 final postDatasource = PostGraphQlDatasourceImpl();
 final musicDatasource = MusicGraphQlDatasourceImpl();
 final locationDatasource = LocationMapboxDatasourceImpl();
+final storageDatasource = FirebaseStorageDatasourceImpl();
 //Definir repositorios aqui
 final authRepository = AuthRepositoryImpl(authDatasource);
 final localRepository = LocalRepositoryImpl(localDatasource);
@@ -26,12 +30,13 @@ final userRepository = UserRepositoryImpl(userDataSource);
 final postRepository = PostRepositoryImpl(postDatasource);
 final musicRepository = MusicRepositoryImpl(musicDatasource);
 final locationRepository = LocationRepositoryImpl(locationDatasource);
+final storageRepository = StorageRepositoryImpl(storageDatasource);
 // Definir instancias de casos de uso aquí
 final loginUseCase = LoginUseCase(authRepository, localRepository);
 final registerUseCase = RegisterUseCase(authRepository, cameraService);
 final userUseCase = UserUseCase(userRepository);
 final authUseCase = AuthUseCase(localRepository);
-final postUseCase = PostUseCase(postRepository);
+final postUseCase = PostUseCase(postRepository,storageRepository);
 final searchUseCase = SearchUseCase(userRepository, localRepository);
 final cameraUseCase = CameraUseCase(cameraService);
 final musicUseCase = MusicUseCase(musicRepository);

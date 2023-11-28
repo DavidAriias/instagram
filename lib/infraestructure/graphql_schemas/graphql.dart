@@ -8,3 +8,4 @@ export 'queries/user_queries.dart';
 export 'fragments/user_fragment.dart';
 export 'mutations/user_mutations.dart';
 export 'queries/music_queries.dart';
+export 'mutations/post_mutations.dart';

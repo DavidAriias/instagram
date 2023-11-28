@@ -12,4 +12,9 @@ class PostRepositoryImpl extends PostRepository {
   Future<List<Post>> fetchPostsFromUser(UserInput input) {
     return _dataSource.fetchPostsFromUser(input);
   }
+  
+  @override
+  Future<String> createPost(CreatePostInput input) {
+   return _dataSource.createPost(input);
+  }
 }

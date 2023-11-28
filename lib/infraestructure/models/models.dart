@@ -25,4 +25,12 @@ export '../models/graphql/response/user/change_password_response.dart';
 export '../models/graphql/input/image_input.dart';
 export '../models/graphql/input/song_input.dart';
 export '../models/graphql/response/music/search_song_response.dart';
+export '../models/graphql/input/shared/location_input.dart';
+export 'graphql/input/shared/song_media_input.dart';
+export 'graphql/input/shared/duration_selection_input.dart';
+export 'graphql/input/shared/media_input.dart';
+export 'graphql/input/create_post_input.dart';
+
+
+
 export '../models/mapbox/location_response.dart';

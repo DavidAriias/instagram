@@ -78,8 +78,7 @@ class _InstagramSwiperState extends State<InstagramSwiper> {
                         imageBuilder: (context, imageProvider) => Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.cover)),
+                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover)),
                         ),
                       ));
                 },
@@ -101,7 +100,7 @@ class _InstagramSwiperState extends State<InstagramSwiper> {
             optionalWidget: _Slider(
                 size: size,
                 pageController: _pageController,
-                posts: widget.mediaUrls,
+                images: widget.mediaUrls,
                 currentIndex: currentIndex))
       ],
     );
@@ -112,26 +111,28 @@ class _Slider extends StatelessWidget {
   const _Slider({
     required this.size,
     required PageController pageController,
-    required this.posts,
+    required this.images,
     required this.currentIndex,
   }) : _pageController = pageController;
 
   final Size size;
   final PageController _pageController;
-  final List<String> posts;
+  final List<String> images;
   final int currentIndex;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: size.width / 4.5),
-        child: AnimatedBuilder(
-          animation: _pageController,
-          builder: (context, child) {
-            return _ImageProgressIndicator(
-                posts: posts, currentIndex: currentIndex);
-          },
-        ));
+    return (images.length > 1)
+        ? Padding(
+            padding: EdgeInsets.only(left: size.width / 4.5),
+            child: AnimatedBuilder(
+              animation: _pageController,
+              builder: (context, child) {
+                return _ImageProgressIndicator(
+                    posts: images, currentIndex: currentIndex);
+              },
+            ))
+        : const SizedBox.shrink();
   }
 }
 

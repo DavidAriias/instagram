@@ -72,7 +72,7 @@ class Feature {
         bbox: json["bbox"] == null ? [] : List<double>.from(json["bbox"]!.map((x) => x?.toDouble())),
         center: List<double>.from(json["center"].map((x) => x?.toDouble())),
         geometry: Geometry.fromJson(json["geometry"]),
-        context: List<Context>.from(json["context"].map((x) => Context.fromJson(x))),
+        context: List<Context>.from(json["context"]?.map((x) => Context.fromJson(x)) ?? []),
         address: json["address"],
     );
 
