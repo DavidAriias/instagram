@@ -56,7 +56,13 @@ class SharePostScreen extends ConsumerWidget {
               CustomTextButton(
                   color: Colors.blue,
                   textButton: 'Share',
-                  onPressed: ref.read(postProvider.notifier).onCreatePost)
+                  onPressed: () {
+                    //TODO : REFACTORIZAR COMO CALLBACKS DE POST PROVIDER
+                    ref.read(postProvider.notifier).onCreatePost();
+                    ref.read(listCameraProvider.notifier).onReset();
+                    ref.read(postProvider.notifier).onResetSong();
+                    context.go('/profile');
+                  })
             ],
           ),
           SliverToBoxAdapter(

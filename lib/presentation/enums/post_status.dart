@@ -1,1 +1,1 @@
-enum PostStatus {editing,posting,error}
+enum PostStatus {editing,posting,error, created}

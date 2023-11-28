@@ -1,7 +1,5 @@
 import 'package:instagram/app/useCases/location/location_use_case.dart';
 import 'package:instagram/app/useCases/uses_cases.dart';
-import 'package:instagram/domain/datasources/datasource.dart';
-import 'package:instagram/infraestructure/datasources/remote/firebase/storage/firebase_storage.datasource_impl.dart';
 import 'package:instagram/infraestructure/datasources/remote/mapbox/location_mapbox_datasource_impl.dart';
 
 import 'package:instagram/infraestructure/repositories/remote/post_repository_impl.dart';

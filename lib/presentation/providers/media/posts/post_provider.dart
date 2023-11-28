@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:instagram/app/mappers/media/post/post_mapper.dart';
 import 'package:instagram/app/useCases/uses_cases.dart';
 import 'package:instagram/config/dependenciesInjection/instances_container.dart';
+import 'package:instagram/config/router/app_router_notifier.dart';
 import 'package:instagram/infraestructure/errors/post_error.dart';
 import 'package:instagram/presentation/providers/providers.dart';
 import '../../../../app/models/models.dart';
@@ -9,7 +10,7 @@ import '../../../../domain/entities/entities.dart';
 import '../../../enums/enums.dart';
 
 final postProvider = StateNotifierProvider<PostNotifier, PostState>((ref) {
-  final userData = ref.watch(mainUserProvider);
+  final userData = ref.read(mainUserProvider);
   return PostNotifier(userData, postUseCase, authUseCase);
 });
 
@@ -29,7 +30,6 @@ class PostNotifier extends StateNotifier<PostState> {
     final storageResponse = await _postUseCase.uploadMediaToStorage(
         state.media.map((media) => media.file!).toList(), _userData.id);
 
-  
     final auth = await _authUseCase.getLocalAuth();
 
     final data = PostData(
@@ -43,8 +43,8 @@ class PostNotifier extends StateNotifier<PostState> {
 
     try {
       final post = PostMapper.mapPostDataToCreatePostInput(data);
-      final response = await _postUseCase.createPost(post);
-  
+      await _postUseCase.createPost(post);
+      state = state.copyWith(status: PostStatus.created);
     } on PostException catch (e) {
       _onErrorPosting(e.message);
     }
@@ -149,7 +149,8 @@ class PostState {
       Song: $song,
       username: $username,
       userId: $userId,
-      media: $media
+      media: $media,
+      status: $status
     ''';
   }
 }

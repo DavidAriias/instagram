@@ -125,6 +125,8 @@ final goRouterProvider = Provider((ref) {
       final isGoingTo = state.matchedLocation;
       final authStatus = goRouterNotifier.authStatus;
       final registerStatus = goRouterNotifier.registerStatus;
+    //final postStatus = goRouterNotifier.postStatus;
+
 
       if (registerStatus == RegisterStatus.validating) return '/login';
 
@@ -147,6 +149,7 @@ final goRouterProvider = Provider((ref) {
           return '/';
         }
       }
+
       return null;
     },
   );
